@@ -26,19 +26,37 @@
 
 ## 🚀 快速开始
 
-### 环境要求
+### 方法一：一键安装（推荐）
+
+使用 `npx` 一键安装所有依赖和 Skill：
+
+```bash
+# 一键安装 Skill 到 Hermes
+npx skills add zc1018/dingtalk-markdown -g
+
+# 或安装到特定 Agent
+npx skills add zc1018/dingtalk-markdown --agent hermes
+```
+
+### 方法二：手动安装
+
+#### 环境要求
 
 - Python 3.8+
 - Node.js 16+（用于 MCP 服务）
 - `markitdown` 工具
 
-### 安装依赖
+#### 安装依赖
 
 ```bash
-# 安装 Python 依赖
+# 1. 安装 Python 依赖
 pip install markitdown
 
-# 安装 MCP 服务（Node.js 版本）
+# 2. 克隆 Skill 到 Hermes
+git clone https://github.com/zc1018/dingtalk-markdown.git \
+  ~/.hermes/skills/markitdown-dingding
+
+# 3. 安装 MCP 服务（Node.js 版本）
 cd /path/to/mcp-dingtalk-doc/nodejs
 npm install
 npm run cookie:login  # 首次登录获取 Cookie
@@ -59,21 +77,59 @@ mcp_servers:
     connect_timeout: 60
 ```
 
+### 安装后验证
+
+```bash
+# 1. 验证 Skill 安装
+ls ~/.hermes/skills/markitdown-dingding
+
+# 2. 验证 markitdown 安装
+markitdown --version
+
+# 3. 登录钉钉获取 Cookie
+cd /path/to/mcp-dingtalk-doc/nodejs
+npm run cookie:login
+
+# 4. 重启 Hermes 加载新 Skill
+hermes
+```
+
 ## 📚 使用方法
 
-### 方法一：作为 Hermes Skill 使用
+### 方法一：作为 Hermes Skill 使用（推荐）
 
-1. **安装 Skill**
-   ```bash
-   git clone https://github.com/zc1018/dingtalk-markdown.git \
-     ~/.hermes/skills/markitdown-dingding
-   ```
+**1. 安装 Skill**
 
-2. **在 Hermes 中使用**
-   ```
-   /skills markitdown-dingding
-   转换这个钉钉文档：https://alidocs.dingtalk.com/i/nodes/xxxxx
-   ```
+```bash
+# 使用 npx 一键安装
+npx skills add zc1018/dingtalk-markdown -g
+
+# 或手动克隆
+git clone https://github.com/zc1018/dingtalk-markdown.git \
+  ~/.hermes/skills/markitdown-dingding
+```
+
+**2. 在 Hermes 中使用**
+
+```
+# 加载 Skill
+/skills markitdown-dingding
+
+# 转换钉钉文档
+转换这个钉钉文档：https://alidocs.dingtalk.com/i/nodes/xxxxx
+
+# 或直接使用自然语言
+把这份钉钉文档转成 Markdown：https://alidocs.dingtalk.com/i/nodes/xxxxx
+```
+
+**3. 支持的指令**
+
+| 指令 | 说明 |
+|------|------|
+| `转换钉钉文档 [URL]` | 获取并转换单个文档 |
+| `批量转换 [多个URL]` | 批量处理多个文档 |
+| `提取 Node ID` | 从 URL 中提取文档 ID |
+| `自定义输出路径` | 指定 Markdown 输出位置 |
 
 ### 方法二：直接使用脚本
 
